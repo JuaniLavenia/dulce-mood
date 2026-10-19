@@ -79,7 +79,7 @@ const showVariants = product.variants.length > 1 || current.label !== '';
                   data-badge-text={badge?.text ?? ''}
                   data-badge-class={badge?.className ?? ''}
                 />
-                <span class="block px-3 py-1 rounded-full border border-sage/40 text-sm transition peer-checked:bg-sage peer-checked:border-sage peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-sage peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:line-through peer-disabled:opacity-50">
+                <span class="flex items-center min-h-10 px-4 rounded-full border border-sage/40 text-sm transition peer-checked:bg-sage peer-checked:border-sage peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-sage peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:line-through peer-disabled:opacity-50">
                   {variant.label || 'Único'}
                 </span>
               </label>
