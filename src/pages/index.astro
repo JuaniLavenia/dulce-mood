@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { loadCatalog } from '../lib/catalog';
+import { business, whatsappLink } from '../config/business';
+import fallbackCsv from '../data/catalog.csv?raw';
+
+const products = await loadCatalog(import.meta.env.SHEET_URL, fallbackCsv);
+const categories = [...new Set(products.map((p) => p.category))];
+
+const steps = [
+  { title: 'Elegí', text: 'Mirá el catálogo y elegí el tamaño o la caja que quieras.' },
+  { title: 'Pedí', text: 'Tocá "Pedir" y te escribimos por WhatsApp para confirmar.' },
+  { title: 'Disfrutá', text: 'Coordinamos el retiro o el envío y listo.' },
+];
+---
+
+<Layout
+  title={`${business.name} | Pastelería casera en ${business.city}`}
+  description={`Cookies, cuadraditos, budines, magdalenas y trufas hechos a mano en ${business.city}. Pedí por WhatsApp.`}
+>
+  <header class="container mx-auto px-4 py-6 flex items-center justify-between gap-4">
+    <a href="/" class="font-serif text-2xl font-bold text-sage">{business.name}</a>
+    <a
+      href={whatsappLink(`¡Hola ${business.name}! Quería hacer un pedido.`)}
+      target="_blank"
+      rel="noopener"
+      class="bg-sage hover:bg-sage-dark text-white px-5 py-2 rounded-full text-sm font-semibold transition"
+    >
+      Pedir por WhatsApp
+    </a>
+  </header>
+
+  <section class="container mx-auto px-4 pt-8 pb-12 text-center">
+    <h1 class="font-serif text-4xl md:text-6xl font-bold mb-4">Algo dulce para tu día</h1>
+    <p class="text-lg text-cocoa/80 max-w-xl mx-auto">
+      Cookies, cuadraditos, budines, magdalenas y trufas hechos a mano en {business.city}.
+    </p>
+  </section>
+
+  <main id="catalogo" class="container mx-auto px-4 pb-16">
+    <h2 class="sr-only">Catálogo</h2>
+    <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between mb-8">
+      <input
+        id="search"
+        type="search"
+        placeholder="¿Qué se te antoja?"
+        aria-label="Buscar productos"
+        class="w-full md:w-80 px-4 py-3 rounded-full border border-cocoa/20 focus:border-sage outline-none bg-white"
+      />
+      <div class="flex flex-wrap gap-2" role="group" aria-label="Filtrar por categoría">
+        <button type="button" data-category="" class="chip px-4 py-2 rounded-full text-sm border border-sage bg-sage text-white">
+          Todo
+        </button>
+        {
+          categories.map((category) => (
+            <button type="button" data-category={category} class="chip px-4 py-2 rounded-full text-sm border border-sage text-sage">
+              {category}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {products.map((product) => <ProductCard product={product} />)}
+    </ul>
+    <p id="empty" class="hidden text-center text-cocoa/60 py-10">No encontramos nada con ese filtro.</p>
+  </main>
+
+  <section class="bg-blush">
+    <div class="container mx-auto px-4 py-14 text-center">
+      <h2 class="font-serif text-3xl font-bold mb-3">¿Querés algo especial?</h2>
+      <p class="max-w-xl mx-auto mb-6">
+        Hacemos tartas y pedidos personalizados por encargo para cumpleaños, eventos o regalos. Contanos qué
+        necesitás y para cuándo.
+      </p>
+      <a
+        href={whatsappLink(`¡Hola ${business.name}! Quería consultar por un pedido por encargo.`)}
+        target="_blank"
+        rel="noopener"
+        class="inline-block bg-cocoa hover:bg-cocoa/90 text-white px-6 py-3 rounded-full font-semibold transition"
+      >
+        Consultar un encargo
+      </a>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-4 py-14">
+    <h2 class="font-serif text-3xl font-bold text-center mb-8">¿Cómo pedir?</h2>
+    <ol class="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
+      {
+        steps.map((step, i) => (
+          <li class="bg-white rounded-3xl p-6 text-center shadow-sm">
+            <span class="inline-flex w-10 h-10 items-center justify-center rounded-full bg-sage text-white font-bold mb-3">
+              {i + 1}
+            </span>
+            <h3 class="font-serif text-xl font-bold mb-1">{step.title}</h3>
+            <p class="text-sm text-cocoa/80">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <footer class="text-center text-sm text-cocoa/70 py-6 px-4 border-t border-cocoa/10">
+    © {new Date().getFullYear()} {business.name} · {business.city}
+  </footer>
+
+  <script>
+    import { initCatalogFilter } from '../scripts/catalog-filter';
+    import { initVariantPicker } from '../scripts/variant-picker';
+    initCatalogFilter(['bg-sage', 'text-white'], ['text-sage']);
+    initVariantPicker();
+  </script>
+</Layout>

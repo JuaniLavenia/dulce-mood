@@ -1,0 +1,110 @@
+---
+import type { Availability, Product, Variant } from '../lib/catalog';
+import { business, whatsappLink } from '../config/business';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const formatPrice = (value: number) =>
+  value > 0
+    ? new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(value)
+    : 'A consultar';
+
+const badges: Record<Availability, { text: string; className: string } | null> = {
+  available: null,
+  'on-order': { text: 'Por encargo', className: 'bg-blush text-cocoa' },
+  'sold-out': { text: 'Agotado', className: 'bg-cocoa/10 text-cocoa/70' },
+};
+
+const orderLink = (variant: Variant) => {
+  const item = variant.label ? `${product.name} (${variant.label})` : product.name;
+  const verb = variant.availability === 'on-order' ? 'encargar' : 'pedir';
+  return whatsappLink(`¡Hola ${business.name}! Quería ${verb}: ${item}`);
+};
+
+// Preselect the first variant that can still be ordered.
+const selected = Math.max(0, product.variants.findIndex((v) => v.availability !== 'sold-out'));
+const current = product.variants[selected];
+const currentBadge = badges[current.availability];
+const showVariants = product.variants.length > 1 || current.label !== '';
+---
+
+<li
+  class="product bg-white rounded-3xl shadow-sm overflow-hidden flex flex-col"
+  data-category={product.category}
+  data-search={`${product.name} ${product.description} ${product.category}`.toLowerCase()}
+>
+  {
+    product.image ? (
+      <img src={product.image} alt={product.name} loading="lazy" class="h-52 w-full object-cover" />
+    ) : (
+      <div class="h-52 bg-blush/60 flex items-center justify-center font-serif text-xl text-cocoa/70 px-6 text-center">
+        {product.name}
+      </div>
+    )
+  }
+  <div class="p-6 flex flex-col gap-3 flex-1">
+    <div class="flex items-center justify-between gap-2">
+      <span class="text-xs uppercase tracking-wide text-sage font-semibold">{product.category}</span>
+      <span
+        data-badge-display
+        class:list={['text-xs px-2 py-1 rounded-full', currentBadge?.className, { hidden: !currentBadge }]}
+      >
+        {currentBadge?.text}
+      </span>
+    </div>
+    <h3 class="font-serif font-bold text-xl">{product.name}</h3>
+    {product.description && <p class="text-sm text-cocoa/80">{product.description}</p>}
+
+    {
+      showVariants && (
+        <fieldset class="flex flex-wrap gap-2">
+          <legend class="sr-only">Elegí una opción de {product.name}</legend>
+          {product.variants.map((variant, i) => {
+            const badge = badges[variant.availability];
+            return (
+              <label class="cursor-pointer">
+                <input
+                  type="radio"
+                  name={`variant-${product.id}`}
+                  class="peer sr-only"
+                  checked={i === selected}
+                  disabled={variant.availability === 'sold-out'}
+                  data-price={formatPrice(variant.price)}
+                  data-href={orderLink(variant)}
+                  data-badge-text={badge?.text ?? ''}
+                  data-badge-class={badge?.className ?? ''}
+                />
+                <span class="block px-3 py-1 rounded-full border border-sage/40 text-sm transition peer-checked:bg-sage peer-checked:border-sage peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-sage peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:line-through peer-disabled:opacity-50">
+                  {variant.label || 'Único'}
+                </span>
+              </label>
+            );
+          })}
+        </fieldset>
+      )
+    }
+
+    <div class="mt-auto pt-3 flex items-center justify-between gap-2">
+      <span data-price-display class="text-xl font-bold">{formatPrice(current.price)}</span>
+      {
+        current.availability === 'sold-out' ? (
+          <span class="text-sm font-semibold text-cocoa/60">Sin stock</span>
+        ) : (
+          <a
+            data-order
+            href={orderLink(current)}
+            target="_blank"
+            rel="noopener"
+            class="bg-sage hover:bg-sage-dark text-white text-sm font-semibold px-4 py-2 rounded-full transition"
+          >
+            Pedir
+          </a>
+        )
+      }
+    </div>
+  </div>
+</li>

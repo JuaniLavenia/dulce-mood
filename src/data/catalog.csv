@@ -1,0 +1,17 @@
+producto,categoria,variante,precio,disponibilidad,imagen,descripcion
+Cookie de chocolate,Cookies,10 g,700,Disponible,,"Masa de vainilla con chips de chocolate semiamargo."
+Cookie de chocolate,Cookies,25 g,1.500,Disponible,,
+Cookie de chocolate,Cookies,50 g,2.800,Por encargo,,
+Cookie red velvet,Cookies,25 g,1.700,Disponible,,Con chips de chocolate blanco.
+Cookie red velvet,Cookies,50 g,3.200,Agotado,,
+Cuadradito de limón,Cuadraditos,1 unidad,1.200,Disponible,,Base sablée y crema de limón.
+Cuadradito de limón y arándanos,Cuadraditos,1 unidad,1.400,Disponible,,Crema de limón con arándanos frescos.
+Budín de limón,Budines,,9.500,Disponible,,Con glaseado de limón y ralladura.
+Budín de naranja y amapola,Budines,,9.500,Por encargo,,Esponjoso y húmedo.
+Magdalenas de vainilla,Magdalenas,x6,4.500,Disponible,,Clásicas y bien esponjosas.
+Magdalenas de chocolate,Magdalenas,x6,5.000,Disponible,,
+Trufas de chocolate,Trufas,1 unidad,600,Disponible,,Chocolate semiamargo y cacao.
+Caja de cuadraditos de limón,Packs,x9,10.000,Disponible,,Ideal para regalar o compartir.
+Caja de trufas,Packs,x9,5.000,Disponible,,Nueve trufas surtidas en caja de regalo.
+Tarta de frutillas,Tartas,,,Por encargo,,Consultanos tamaños y fechas disponibles.
+Lemon pie,Tartas,,,Por encargo,,
