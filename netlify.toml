@@ -1,0 +1,7 @@
+# Netlify build settings. SHEET_URL is set in the Netlify UI (Site configuration > Environment variables).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

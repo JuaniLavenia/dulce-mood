@@ -12,7 +12,7 @@ Branch: `feat/catalog` · Delivery: single-pr · Test runner: vitest (`npm test`
 - **S5** Data model (proposed, accepted with "dale"): one sheet row per variant; columns `producto, categoria, variante, precio, disponibilidad, imagen, descripcion`; rows sharing `producto`+`categoria` group into one card with a variant selector. `disponibilidad`: Disponible (default) / Por encargo / Agotado.
 - **S6** Ordering via WhatsApp with the selected product and variant; a section for custom "pedidos por encargo".
 - **S7** Publishing: "La idea es que ella cargue su lista de productos en la planilla de drive, y de alguna forma lo suba al sitio. [...] con que lo pueda subir con un boton desde un panel administrativo esta bien." Implemented as an Apps Script menu "Publicar cambios" in the sheet that calls the hosting deploy hook (no separate panel); the same script serves the sheet as CSV via a web app (`SHEET_URL`).
-- **S8** Hosting with free deploy hooks (Cloudflare Pages or Netlify). External setup by the developer.
+- **S8** Hosting: "Lo vamos a subir a netlify, asi que prepara eso tambien". External setup by the developer.
 
 ## Tasks
 
@@ -31,3 +31,4 @@ Branch: `feat/catalog` · Delivery: single-pr · Test runner: vitest (`npm test`
 - **L5** Decision: "Publish to web" CSV is cached by Google for minutes, so a rebuild right after editing could read stale data; the Apps Script `doGet` web app serves fresh CSV instead.
 - **L6** Bug found in browser check: `[data-price]` matched the radios (which carry `data-price`), so the visible price did not update; renamed display hooks to `data-price-display` / `data-badge-display`. Screenshots unavailable (Chrome renderer timeout); verified via DOM.
 - **L7** Next: T5 needs the real WhatsApp number, hosting choice, the sheet setup and real prices/photos.
+- **L8** (2026-10-19) "genial, ahi voy a probar de levantar la app y ver como funciona y te comento. Anda commiteando y pusheando. Lo vamos a subir a netlify, asi que prepara eso tambien" → added `netlify.toml` (build, `dist`, Node 22) and Netlify steps in README; pushed `feat/catalog`.

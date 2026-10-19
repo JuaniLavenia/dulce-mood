@@ -6,6 +6,7 @@ Catálogo online de DulceMood, pastelería casera en San Miguel de Tucumán. Los
 
 - Astro 5 + Tailwind CSS 3 (sitio estático)
 - Google Sheets + Apps Script como fuente de datos y botón de publicar
+- Netlify como hosting (`netlify.toml`)
 - Vitest para los tests
 
 ## Desarrollo
@@ -49,8 +50,8 @@ Ejemplo:
 2. En el editor de Apps Script, ejecutá `setupSheet` una vez (pide permisos). Crea la hoja `Productos` con los encabezados y el desplegable de disponibilidad. Para arrancar, podés importar `src/data/catalog.csv`.
 3. **URL de datos**: *Implementar → Nueva implementación → Aplicación web*, con "Ejecutar como: yo" y "Quién tiene acceso: cualquier persona". Copiá la URL que termina en `/exec`: esa es `SHEET_URL`.
    - Si cambiás `Code.js`, actualizá la implementación existente (*Administrar implementaciones → Editar → Nueva versión*) para conservar la misma URL.
-4. **Hosting** (Cloudflare Pages o Netlify): conectá este repo con el comando de build `npm run build`, la carpeta de salida `dist` y la variable de entorno `SHEET_URL`.
-5. **Deploy hook**: creá uno en el hosting (Netlify: *Site configuration → Build hooks*; Cloudflare Pages: *Settings → Builds → Deploy hooks*).
+4. **Netlify**: *Add new site → Import an existing project* y elegí este repo. El build ya está configurado en `netlify.toml` (`npm run build`, carpeta `dist`, Node 22). En *Site configuration → Environment variables* agregá `SHEET_URL` y volvé a deployar.
+5. **Build hook**: en *Site configuration → Build & deploy → Build hooks* creá uno para la rama `main` y copiá su URL.
 6. En Apps Script, en *Configuración del proyecto → Propiedades de la secuencia de comandos*, agregá `DEPLOY_HOOK_URL` con la URL del hook.
 7. Compartí la planilla con la dueña como **editora**. Al abrirla va a ver el menú **DulceMood → Publicar cambios**.
 
