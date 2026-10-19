@@ -20,7 +20,7 @@ Branch: `feat/catalog` · Delivery: single-pr · Test runner: vitest (`npm test`
 - [x] T2 (S5) Catalog module: CSV parse, variant grouping, availability — inline, RED 11 failing → GREEN 15/15 — 42451b8
 - [x] T3 (S3, S4, S6) Catalog page: categories, search, variant selector, WhatsApp order, encargo section — inline, build OK + DOM check in Chrome — a3983c3
 - [x] T4 (S7) Apps Script "Publicar cambios" + sheet template + README setup — inline, CSV roundtrip test (written with the code, no RED) — a21872c
-- [ ] T5 (S8) Deploy, env var `SHEET_URL`, deploy hook, real WhatsApp number — pending (external, user)
+- [x] T5 (S8) Deploy, env var `SHEET_URL`, deploy hook, real WhatsApp number — user setup + PR #3, verified live end to end
 
 ## Log
 
@@ -32,3 +32,6 @@ Branch: `feat/catalog` · Delivery: single-pr · Test runner: vitest (`npm test`
 - **L6** Bug found in browser check: `[data-price]` matched the radios (which carry `data-price`), so the visible price did not update; renamed display hooks to `data-price-display` / `data-badge-display`. Screenshots unavailable (Chrome renderer timeout); verified via DOM.
 - **L7** Next: T5 needs the real WhatsApp number, hosting choice, the sheet setup and real prices/photos.
 - **L8** (2026-10-19) "genial, ahi voy a probar de levantar la app y ver como funciona y te comento. Anda commiteando y pusheando. Lo vamos a subir a netlify, asi que prepara eso tambien" → added `netlify.toml` (build, `dist`, Node 22) and Netlify steps in README; pushed `feat/catalog`.
+- **L9** (2026-10-19) Sheet, Apps Script web app, Netlify site, `SHEET_URL` and build hook (`DEPLOY_HOOK_URL`) set up by the user; "funciono todo punta a punta" (sheet edit → Publicar cambios → Netlify deploy).
+- **L10** (2026-10-19) Follow-ups after launch, each verified on https://dulcemood.netlify.app/: PR #2 Cloudinary photo optimization (`f_auto,q_auto,w_800,c_limit`, 60-86 KB per photo); PR #3 real WhatsApp number (`+5493816292088`); PR #4 square product images (vertical phone photos cropped to ~1/4); PR #5 swipeable category row and 40px variant buttons on mobile (first product 570px → 498px at 390px wide).
+- **L11** (2026-10-19) "dale commitea el env example y el odd en un PR chiquito" → `.env.example` tracked (`!.env.example` in `.gitignore`); T5 closed. Feature complete.
