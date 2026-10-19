@@ -48,13 +48,14 @@ const steps = [
         aria-label="Buscar productos"
         class="w-full md:w-80 px-4 py-3 rounded-full border border-cocoa/20 focus:border-sage outline-none bg-white"
       />
-      <div class="flex flex-wrap gap-2" role="group" aria-label="Filtrar por categoría">
-        <button type="button" data-category="" class="chip px-4 py-2 rounded-full text-sm border border-sage bg-sage text-white">
+      {/* One swipeable row on phones (bleeds to the screen edge as a scroll hint), wrapping from md up. */}
+      <div class="flex gap-2 overflow-x-auto -mx-4 px-4 pb-1 md:mx-0 md:px-0 md:pb-0 md:flex-wrap md:overflow-visible" role="group" aria-label="Filtrar por categoría">
+        <button type="button" data-category="" class="chip shrink-0 whitespace-nowrap px-4 py-2 rounded-full text-sm border border-sage bg-sage text-white">
           Todo
         </button>
         {
           categories.map((category) => (
-            <button type="button" data-category={category} class="chip px-4 py-2 rounded-full text-sm border border-sage text-sage">
+            <button type="button" data-category={category} class="chip shrink-0 whitespace-nowrap px-4 py-2 rounded-full text-sm border border-sage text-sage">
               {category}
             </button>
           ))
