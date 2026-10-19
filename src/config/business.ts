@@ -2,8 +2,7 @@
 export const business = {
   name: 'DulceMood',
   city: 'San Miguel de Tucumán',
-  // TODO: replace with DulceMood's real number before publishing.
-  whatsapp: '+5493810000000',
+  whatsapp: '+5493816292088',
 };
 
 // wa.me only accepts digits (no "+", spaces or dashes).
