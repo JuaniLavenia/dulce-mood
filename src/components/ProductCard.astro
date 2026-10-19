@@ -1,6 +1,7 @@
 ---
 import type { Availability, Product, Variant } from '../lib/catalog';
 import { business, whatsappLink } from '../config/business';
+import { optimizeImage } from '../lib/image';
 
 interface Props {
   product: Product;
@@ -39,7 +40,7 @@ const showVariants = product.variants.length > 1 || current.label !== '';
 >
   {
     product.image ? (
-      <img src={product.image} alt={product.name} loading="lazy" class="h-52 w-full object-cover" />
+      <img src={optimizeImage(product.image)} alt={product.name} loading="lazy" class="h-52 w-full object-cover" />
     ) : (
       <div class="h-52 bg-blush/60 flex items-center justify-center font-serif text-xl text-cocoa/70 px-6 text-center">
         {product.name}

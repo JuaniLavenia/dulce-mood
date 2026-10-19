@@ -33,7 +33,7 @@ Cada fila de la hoja `Productos` es **una variante**. Las filas con el mismo `pr
 | `variante` | Tamaño o presentación: `10 g`, `25 g`, `x9`. Vacío si hay una sola. |
 | `precio` | `1.500` o `1500`. Vacío muestra "A consultar". |
 | `disponibilidad` | `Disponible` (o vacío), `Por encargo` o `Agotado`. Las variantes agotadas no se pueden pedir. |
-| `imagen` | URL pública y directa de la foto (opcional). Los links de Google Drive no sirven. |
+| `imagen` | URL de la foto en Cloudinary (*Media Library → Copy URL*). Opcional. El sitio la achica y la optimiza solo. Los links de Google Drive no sirven. |
 | `descripcion` | Texto corto. Se toma de la primera fila del producto que lo tenga. |
 
 Ejemplo:
