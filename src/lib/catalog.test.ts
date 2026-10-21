@@ -26,8 +26,8 @@ describe('toProducts', () => {
     );
     expect(result.map((p) => p.name)).toEqual(['Cookie de chocolate', 'Trufas']);
     expect(result[0].variants).toEqual([
-      { label: '10 g', price: 800, availability: 'available' },
-      { label: '25 g', price: 1800, availability: 'available' },
+      { label: '10 g', price: 800, availability: 'available', image: '', description: '' },
+      { label: '25 g', price: 1800, availability: 'available', image: '', description: '' },
     ]);
   });
 
@@ -71,6 +71,15 @@ describe('toProducts', () => {
     expect(result[0]).toMatchObject({ image: 'https://img/a.jpg', description: 'Rico' });
   });
 
+  it('gives each variant its own image and description, falling back to the product ones', () => {
+    const result = products('A,X,1,1,,,', 'A,X,2,1,,https://img/a.jpg,Rico', 'A,X,3,1,,https://img/b.jpg,Otro');
+    expect(result[0].variants.map(({ image, description }) => ({ image, description }))).toEqual([
+      { image: 'https://img/a.jpg', description: 'Rico' },
+      { image: 'https://img/a.jpg', description: 'Rico' },
+      { image: 'https://img/b.jpg', description: 'Otro' },
+    ]);
+  });
+
   it('skips rows without a product name and defaults the category', () => {
     const result = products(',Cookies,10 g,800,,,', 'Alfajor,,,900,,,');
     expect(result).toHaveLength(1);
@@ -80,7 +89,7 @@ describe('toProducts', () => {
   it('accepts headers in any order and case', () => {
     const result = toProducts(parseCsv('Precio,PRODUCTO,Categoria\n700,Magdalena,Magdalenas'));
     expect(result[0]).toMatchObject({ name: 'Magdalena', category: 'Magdalenas' });
-    expect(result[0].variants).toEqual([{ label: '', price: 700, availability: 'available' }]);
+    expect(result[0].variants).toEqual([{ label: '', price: 700, availability: 'available', image: '', description: '' }]);
   });
 
   it('gives each product a stable, unique id', () => {

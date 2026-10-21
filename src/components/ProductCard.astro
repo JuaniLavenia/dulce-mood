@@ -31,16 +31,23 @@ const selected = Math.max(0, product.variants.findIndex((v) => v.availability !=
 const current = product.variants[selected];
 const currentBadge = badges[current.availability];
 const showVariants = product.variants.length > 1 || current.label !== '';
+const descriptions = [...new Set(product.variants.map((v) => v.description))].join(' ');
 ---
 
 <li
   class="product bg-white rounded-3xl shadow-sm overflow-hidden flex flex-col"
   data-category={product.category}
-  data-search={`${product.name} ${product.description} ${product.category}`.toLowerCase()}
+  data-search={`${product.name} ${descriptions} ${product.category}`.toLowerCase()}
 >
   {
-    product.image ? (
-      <img src={optimizeImage(product.image)} alt={product.name} loading="lazy" class="aspect-square w-full object-cover" />
+    current.image ? (
+      <img
+        data-image-display
+        src={optimizeImage(current.image)}
+        alt={product.name}
+        loading="lazy"
+        class="aspect-square w-full object-cover"
+      />
     ) : (
       <div class="aspect-square bg-blush/60 flex items-center justify-center font-serif text-xl text-cocoa/70 px-6 text-center">
         {product.name}
@@ -58,7 +65,7 @@ const showVariants = product.variants.length > 1 || current.label !== '';
       </span>
     </div>
     <h3 class="font-serif font-bold text-xl">{product.name}</h3>
-    {product.description && <p class="text-sm text-cocoa/80">{product.description}</p>}
+    {current.description && <p data-description-display class="text-sm text-cocoa/80">{current.description}</p>}
 
     {
       showVariants && (
@@ -78,6 +85,8 @@ const showVariants = product.variants.length > 1 || current.label !== '';
                   data-href={orderLink(variant)}
                   data-badge-text={badge?.text ?? ''}
                   data-badge-class={badge?.className ?? ''}
+                  data-image={variant.image && optimizeImage(variant.image)}
+                  data-description={variant.description}
                 />
                 <span class="flex items-center min-h-10 px-4 rounded-full border border-sage/40 text-sm transition peer-checked:bg-sage peer-checked:border-sage peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-sage peer-focus-visible:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:line-through peer-disabled:opacity-50">
                   {variant.label || 'Único'}
