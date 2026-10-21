@@ -9,9 +9,12 @@ const products = await loadCatalog(import.meta.env.SHEET_URL, fallbackCsv);
 const categories = [...new Set(products.map((p) => p.category))];
 
 const steps = [
-  { title: 'Elegí', text: 'Mirá el catálogo y elegí el tamaño o la caja que quieras.' },
-  { title: 'Pedí', text: 'Tocá "Pedir" y te escribimos por WhatsApp para confirmar.' },
-  { title: 'Disfrutá', text: 'Coordinamos el retiro o el envío y listo.' },
+  { title: 'Elegí tus favoritos', text: 'Explorá el catálogo y elegí tus productos y presentaciones favoritas.' },
+  { title: 'Hacé tu pedido', text: 'Tocá el botón de pedir y escribinos por WhatsApp para realizar tu pedido.' },
+  {
+    title: '¡A disfrutar!',
+    text: 'Coordinamos el retiro o envío para que recibas tu pedido y disfrutes de algo rico.',
+  },
 ];
 ---
 
@@ -32,9 +35,9 @@ const steps = [
   </header>
 
   <section class="container mx-auto px-4 pt-8 pb-12 text-center">
-    <h1 class="font-serif text-4xl md:text-6xl font-bold mb-4">Algo dulce para tu día</h1>
+    <h1 class="font-serif text-4xl md:text-6xl font-bold mb-4">Tu próximo antojo está acá.</h1>
     <p class="text-lg text-cocoa/80 max-w-xl mx-auto">
-      Cookies, cuadraditos, budines, magdalenas y trufas hechos a mano en {business.city}.
+      Pastelería casera hecha en Tucumán, lista para endulzar tus días.
     </p>
   </section>
 
@@ -71,18 +74,17 @@ const steps = [
 
   <section class="bg-blush">
     <div class="container mx-auto px-4 py-14 text-center">
-      <h2 class="font-serif text-3xl font-bold mb-3">¿Querés algo especial?</h2>
+      <h2 class="font-serif text-3xl font-bold mb-3">¿Buscás algo personalizado?</h2>
       <p class="max-w-xl mx-auto mb-6">
-        Hacemos tartas y pedidos personalizados por encargo para cumpleaños, eventos o regalos. Contanos qué
-        necesitás y para cuándo.
+        Creamos opciones dulces para regalar, compartir y celebrar. ¡Escribinos y armamos algo para vos!
       </p>
       <a
-        href={whatsappLink(`¡Hola ${business.name}! Quería consultar por un pedido por encargo.`)}
+        href={whatsappLink(`¡Hola ${business.name}! Quería consultar por un pedido personalizado.`)}
         target="_blank"
         rel="noopener"
         class="inline-block bg-cocoa hover:bg-cocoa/90 text-white px-6 py-3 rounded-full font-semibold transition"
       >
-        Consultar un encargo
+        Consultar por WhatsApp
       </a>
     </div>
   </section>
@@ -94,7 +96,7 @@ const steps = [
         steps.map((step, i) => (
           <li class="bg-white rounded-3xl p-6 text-center shadow-sm">
             <span class="inline-flex w-10 h-10 items-center justify-center rounded-full bg-sage text-white font-bold mb-3">
-              {i + 1}
+              {String(i + 1).padStart(2, '0')}
             </span>
             <h3 class="font-serif text-xl font-bold mb-1">{step.title}</h3>
             <p class="text-sm text-cocoa/80">{step.text}</p>
