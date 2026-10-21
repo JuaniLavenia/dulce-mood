@@ -22,3 +22,6 @@ Thumbs.db
 
 
 .atl/
+
+# Brand design sources (JPEG/SVG exports); the site uses the cropped copies in public/brand/
+assets/
