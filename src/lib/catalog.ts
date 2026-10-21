@@ -12,6 +12,9 @@ export interface Variant {
   // 0 means "to quote": the price is agreed over WhatsApp.
   price: number;
   availability: Availability;
+  // The variant's own cells, or the product's when left empty.
+  image: string;
+  description: string;
 }
 
 export interface Product {
@@ -113,13 +116,25 @@ export function toProducts(rows: string[][]): Product[] {
       product = { id: slug(`${category} ${name}`), name, category, description: '', image: '', variants: [] };
       products.set(key, product);
     }
-    product.description ||= cell(row, cols.description);
-    product.image ||= cell(row, cols.image);
+    const description = cell(row, cols.description);
+    const image = cell(row, cols.image);
+    product.description ||= description;
+    product.image ||= image;
     product.variants.push({
       label: cell(row, cols.variant),
       price: toPrice(cell(row, cols.price)),
       availability: toAvailability(cell(row, cols.availability)),
+      image,
+      description,
     });
+  }
+  // Fill empty variant cells once the product values are known, since they may
+  // come from a later row.
+  for (const product of products.values()) {
+    for (const variant of product.variants) {
+      variant.image ||= product.image;
+      variant.description ||= product.description;
+    }
   }
   return [...products.values()];
 }
